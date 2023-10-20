@@ -35,7 +35,6 @@ export const App = () => {
 
   //   //відправка форми з перевіркою існування контаку в списку
   const onSubmit = newCont => {
-    console.log('newCont', newCont);
     if (contactByNameSearch(newCont.name, isContacts)) {
       alert(`${newCont.name} is alredy in conacts`);
       return;
@@ -70,10 +69,7 @@ export const App = () => {
   return (
     <>
       <h1 style={{ marginLeft: '20px' }}>Phonebook</h1>
-      <ContactForm
-        //handelInputChange={handelInputChangeForm}
-        onSubmitForm={onSubmit}
-      />
+      <ContactForm onSubmitForm={onSubmit} />
       <h2 style={{ marginLeft: '20px' }}>Contacts</h2>
       <Filter
         style={{ marginLeft: '20px' }}
@@ -81,7 +77,6 @@ export const App = () => {
         filter={isFilter}
       />
       <ContactList
-        //contacts={getFilteredContacts(isContacts)}
         isContacts={getFilteredContacts(isFilter)}
         onRemoveContact={onRemoveContact}
       />
