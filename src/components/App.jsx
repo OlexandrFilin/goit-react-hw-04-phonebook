@@ -4,11 +4,12 @@ import { Filter } from './Filter/Filter';
 import React, { useEffect, useState } from 'react';
 
 export const App = () => {
-  const [isContacts, setContacts] = useState([ {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-  {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-  {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-  {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},]);
-
+  const [isContacts, setContacts] = useState([
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ]);
 
   // const [isContacts, setContacts] = useState(JSON.parse('contacts'));
   const [isFilter, setFilter] = useState('');
@@ -27,7 +28,7 @@ export const App = () => {
   const handelInputChangeFilter = e => {
     setFilter(e.currentTarget.value);
   };
-    const contactByNameSearch = nameContact => {
+  const contactByNameSearch = nameContact => {
     return isContacts.find(item => {
       return item.name === nameContact;
     });
@@ -35,14 +36,14 @@ export const App = () => {
 
   //   //відправка форми з перевіркою існування контаку в списку
   const onSubmit = newCont => {
-    console.log('newCont', newCont)
+    console.log('newCont', newCont);
     if (contactByNameSearch(newCont.name, isContacts)) {
       alert(`${newCont.name} is alredy in conacts`);
       return;
     }
 
     setContacts(prevState => {
-     setContacts([...prevState, newCont]);
+      setContacts([...prevState, newCont]);
     });
   };
   const getNewListContacts = (conacts, idForRemove) => {
@@ -54,7 +55,18 @@ export const App = () => {
     //отримуємо список контактів без контакту З ID = idForRem, що треба видалити
     const withOutDel = getNewListContacts(isContacts, idForRem);
     setContacts([...withOutDel]);
-   };
+  };
+  //отримуэмо контакти відфільтровані по данним в інпуті
+  const getFilteredContacts = filtr => {
+    //const { contacts } = this.state;
+    if (filtr === '') {
+      return isContacts;
+    } else {
+      return isContacts.filter(el => {
+        return el.name.toLowerCase().includes(filtr.toLowerCase());
+      });
+    }
+  };
 
   return (
     <>
@@ -71,8 +83,8 @@ export const App = () => {
       />
       <ContactList
         //contacts={getFilteredContacts(isContacts)}
-        isContacts={isContacts}
-         onRemoveContact={onRemoveContact}
+        isContacts={getFilteredContacts(isFilter)}
+        onRemoveContact={onRemoveContact}
       />
     </>
   );
